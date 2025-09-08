@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+</head>
+
+<body>
+    <div id="main">
+        <div id="topt">
+        </div>
+        <div id="container">
+            <div id="gameplay"></div>
+            <div id="stuff">
+                <div id="ro"></div>
+                <div id="panel">
+                    <div id="bgcontainer">
+                        <div id="pick">N/A</div>
+                        <img id="bg" />
+                    </div>
+                    <div id="custom"><img src="assets/settings.svg" /><span>CUSTOM</span></div>
+                    <div id="mapmeta">
+                        <div id="artist"></div>
+                        <div id="title"></div>
+                        <div id="difficulty"></div>
+                        <div id="mapper"></div>
+                        <div id="replayer-container"></div>
+                    </div>
+
+                    <div id="divider"></div>
+
+                    <div id="srcontainer">
+                        <div>
+                            SR
+                        </div>
+                        <span id="sr" class="value"></span>
+                        *
+                    </div>
+
+                    <div id="stats">
+
+                        <div id="cs">CS <span id="csval" class="invert value"></span></div>
+                        <div id="ar">AR <span id="arval" class="invert value"></span></div>
+                        <div id="od">OD <span id="odval" class="invert value"></span></div>
+                        <div id="hp">HP <span id="hpval" class="invert value"></span></div>
+                        <div id="bpmcontainer"><img class="icon" src="assets/metronome.svg" /><span id="bpm" class="invert value"></span>
+                        </div>
+                        <div id="lengthcontainer">
+                            <img class="icon" src="assets/clock.svg">
+                            <span id="length" class="invert value">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div id="casters"> 
+                    <span id="ctitle">CASTERS</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <script src="../deps/reconnecting-websocket.min.js"></script>
+    <script src="../deps/countUp.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>

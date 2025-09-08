@@ -1,0 +1,10 @@
+dark indigo ish - #1d1c28
+lighter shade - #1e1c28
+
+
+yellows
+#f6e49f
+#ffe78e
+#ffea99
+#ffefb3
+

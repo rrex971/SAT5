@@ -212,6 +212,12 @@
 
 #sr {
     font-style: normal;
+    font-size:32px;
+    font-family: Raleway;
+}
+
+#srval {
+    font-family: Arial;
 }
 .icon2 {
     width: 32px;

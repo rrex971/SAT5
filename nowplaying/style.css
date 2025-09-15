@@ -1,0 +1,37 @@
+:root {
+    max-width: 1920px;
+    max-height: 200px;
+    font-weight: 400;
+}
+#main {
+    position: absolute;
+    width: 1920px;
+    height: 200px;
+    font-family: Raleway;
+    font-size: 24px;
+    color:white;
+    overflow: hidden;
+    font-optical-sizing: auto;
+}
+
+#np {
+    font-style: italic;
+}
+
+
+#song {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Raleway', Arial, sans-serif;
+    font-size: 2rem;
+    color: #f6e49f;
+    text-shadow: 0 0 32px #f6e49f88;
+    border-radius: 12px;
+    transition: color 0.2s;
+    text-align: center;
+    width: 90%;
+}

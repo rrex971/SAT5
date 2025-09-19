@@ -61,7 +61,7 @@ let temp = {
     scoreDiff: 0
 }
 
-fetch('mappool.json')
+fetch('../mappool.json')
     .then(response => response.json())
     .then(data => mappool = data)
     .then(() => {

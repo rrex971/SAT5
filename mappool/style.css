@@ -1,0 +1,66 @@
+:root {
+    max-width: 1920px;
+    max-height: 1080px;
+    font-weight: 400;
+}
+#main {
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    background-image: url("assets/mappool.png");
+    background-size: contain;
+    font-family: Raleway;
+    color:white;
+    overflow: hidden;
+    font-optical-sizing: auto;
+}
+
+
+
+#maps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-content: center;
+    width: 80%;
+    height: 80%;
+}
+
+.map {
+    width: 300px;
+    height: 100px;
+    background-color: #2c2c2c;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: transform 0.2s ease-in-out;
+}
+
+.map:hover {
+    transform: scale(1.05);
+}
+
+.map-mod {
+    font-size: 2em;
+    font-weight: bold;
+    margin-right: 20px;
+    width: 80px;
+    text-align: center;
+}
+
+.map-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.map-title {
+    font-weight: bold;
+}
+
+.map-artist {
+    font-size: 0.9em;
+    color: #ccc;
+}

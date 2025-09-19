@@ -8,3 +8,8 @@ yellows
 #ffea99
 #ffefb3
 
+
+pink for p2
+
+#f7c9e2
+#a17697

@@ -6,17 +6,104 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 </head>
 
 <body>
     <div id="main">
-        <div id="picks"></div>
-        <div id="maps">
-            
+        <div id="topt">
         </div>
+        <div id="container">
+            <div id="gameplay">
+                <div id="topbar">
+                    <div class="player player-one">
+                        <div class="player-label">PLAYER 1</div>
+                        <div id="player-one-name">/ / /</div>
+                        <div class="seed">SEED 2</div>
+                        <div class="points">
+                            <div id="point1_0"></div>
+                            <div id="point1_1"></div>
+                            <div id="point1_2"></div>
+                            <div id="point1_3"></div>
+                            <div id="point1_4"></div>
+                        </div>
+
+                    </div>
+                    <div class="pfp" id="pfp1"></div>
+                    <div class="pfp" id="pfp2"></div>
+                    <div class="player player-two">
+                        <div class="player-label">PLAYER 2</div>
+                        <div id="player-two-name">\ \ \</div>
+                        <div class="seed">SEED 31</div>
+                        <div class="points">
+                            <div id="point2_4"></div>
+                            <div id="point2_3"></div>
+                            <div id="point2_2"></div>
+                            <div id="point2_1"></div>
+                            <div id="point2_0"></div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div id="maps"></div>
+                <div id="chatlabels">
+                    <div id="chatlabel1">INGAME CHAT</div>
+                    <div id="chatlabel2">TWITCH CHAT</div>
+                </div>
+            </div>
+            <div id="stuff">
+                <div id="ro"></div>
+                <div id="panel">
+                    <div id="bgcontainer">
+                        <div id="pick">N/A</div>
+                        <img id="bg" />
+                    </div>
+                    <div id="custom"><img src="assets/settings.svg" /><span>CUSTOM</span></div>
+                    <div id="mapmeta">
+                        <div id="artist"></div>
+                        <div id="title"></div>
+                        <div id="difficulty"></div>
+                        <div id="mapper"></div>
+                    </div>
+
+                    <div id="divider"></div>
+
+                    <div id="srcontainer">
+                        <div>
+                            SR
+                        </div>
+                        <span id="srval">
+                            <span id="sr" class="value"></span>*
+                        </span>
+                    </div>
+
+                    <div id="stats">
+
+                        <div id="cs">CS <span id="csval" class="invert value"></span></div>
+                        <div id="ar">AR <span id="arval" class="invert value"></span></div>
+                        <div id="od">OD <span id="odval" class="invert value"></span></div>
+                        <div id="hp">HP <span id="hpval" class="invert value"></span></div>
+                        <div id="bpmcontainer"><img class="icon" src="assets/metronome.svg" /><span id="bpm"
+                                class="invert value"></span>
+                        </div>
+                        <div id="lengthcontainer">
+                            <img class="icon" src="assets/clock.svg">
+                            <span id="length" class="invert value">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div id="casters">
+                    <span id="ctitle">CASTERS</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
     </div>
     <script src="../deps/reconnecting-websocket.min.js"></script>
     <script src="../deps/countUp.js"></script>

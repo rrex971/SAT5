@@ -350,9 +350,25 @@
 }
 #topbar{
     height: 140px;
+    width: 100%;
+    position: absolute;
 }
 
+.pfp {
+    width: 138px;
+    height: 138px;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+}
 
+#pfp1{
+    left:2px;
+}
+
+#pfp2{
+    right: -1px;
+}
 .player {
     position:absolute;
     top:8px;
@@ -360,7 +376,7 @@
 }
 
 .player-one {
-    left:10px;
+    left:150px;
     text-align:left;
     color: #f6e49f;
 }
@@ -384,7 +400,7 @@
 }
 
 .player-two {
-    right:8px;
+    right:150px;
     text-align:right;
     color: #f7c9e2;
 }
@@ -481,7 +497,7 @@
 }
 
 #diff {
-    font-size: 16px;
+    font-size: 24px;
     margin-bottom: -20px;
 }
 
@@ -493,4 +509,23 @@
 #score2.leading {
     text-shadow: 0 0 10px rgba(247, 201, 226, 0.8);
     font-size: 40px;
+}
+
+#chatlabels{
+    position: absolute;
+    top: 800px;
+    width: 61%;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 50px;
+    font-size: 16px;
+    color: #1d1c28;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+#chatlabels > * {
+    background-color: #f6e49f;
+    padding: 6px;
 }

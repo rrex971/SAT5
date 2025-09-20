@@ -212,11 +212,13 @@ socket.onmessage = event => {
         }
 
         if (temp.playerLeft !== data.tourney.clients[0].user.name) {
+            document.getElementById("pfp1").style.backgroundImage = `url("https://a.ppy.sh/${data.tourney.clients[0].user.id}")`;
             temp.playerLeft = data.tourney.clients[0].user.name;
             player1name.innerHTML = temp.playerLeft;
         }
 
         if (temp.playerRight !== data.tourney.clients[1].user.name) {
+            document.getElementById("pfp2").style.backgroundImage = `url("https://a.ppy.sh/${data.tourney.clients[1].user.id}")`;
             temp.playerRight = data.tourney.clients[1].user.name;
             player2name.innerHTML = temp.playerRight;
         }

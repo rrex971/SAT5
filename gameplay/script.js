@@ -70,6 +70,14 @@ fetch('../mappool.json')
     })
     .catch(error => console.error('Error loading mappool:', error));
 
+let seeds = {};
+fetch('../seeds.json')
+    .then(response => response.json())
+    .then(data => {
+        seeds = data;
+    })
+    .catch(error => console.error('Error loading seeds:', error));
+
 socket.onopen = () => {
     console.log("Successfully Connected");
 
@@ -215,12 +223,14 @@ socket.onmessage = event => {
             document.getElementById("pfp1").style.backgroundImage = `url("https://a.ppy.sh/${data.tourney.clients[0].user.id}")`;
             temp.playerLeft = data.tourney.clients[0].user.name;
             player1name.innerHTML = temp.playerLeft;
+            document.getElementById('seed1').innerHTML = seeds[temp.playerLeft] ? `SEED ${seeds[temp.playerLeft]}` : ' ';
         }
 
         if (temp.playerRight !== data.tourney.clients[1].user.name) {
             document.getElementById("pfp2").style.backgroundImage = `url("https://a.ppy.sh/${data.tourney.clients[1].user.id}")`;
             temp.playerRight = data.tourney.clients[1].user.name;
             player2name.innerHTML = temp.playerRight;
+            document.getElementById('seed2').innerHTML = seeds[temp.playerRight] ? `SEED ${seeds[temp.playerRight]}` : ' ';
         }
 
         if (scoreUpd) {

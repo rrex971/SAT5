@@ -129,7 +129,16 @@
     }
 })();
 
+document.addEventListener('contextmenu', function(event) {
+  event.preventDefault(); 
+});
+
+document.addEventListener('click', function(event) {
+  event.preventDefault(); 
+});
+
 function handleMapClick(mapElement, event) {
+    event.preventDefault();
     const isShift = event.shiftKey;
     const isRightClick = event.type === 'contextmenu' || event.button === 2;
     const isAlt = event.altKey;
@@ -137,6 +146,7 @@ function handleMapClick(mapElement, event) {
 
     if (isCtrl) {
         const labels = mapElement.querySelectorAll('.map-status');
+        mapElement.classList.remove('flash-left', 'flash-right');
         labels.forEach(l => l.remove());
         mapElement.style.borderColor = '#f6e49f';
         mapElement.style.filter = 'none';
@@ -163,8 +173,22 @@ function handleMapClick(mapElement, event) {
         mapElement.style.filter = '';
         if (!isShift && !isRightClick) {
             statusText = `Picked by ${temp.playerLeft}`;
+            mapElement.style.borderColor = '#f6e49f';
+            setTimeout(() => {
+                mapElement.classList.add('flash-left');
+            }, 100);
+            setTimeout(() => {
+                mapElement.classList.remove('flash-left');
+            }, 4000);
         } else if (!isShift && isRightClick) {
             statusText = `Picked by ${temp.playerRight}`;
+            mapElement.style.borderColor = '#f7c9e2';
+            setTimeout(() => {
+                mapElement.classList.add('flash-right');
+            }   , 100);
+            setTimeout(() => {
+                mapElement.classList.remove('flash-right');
+            }, 4000);
         }
     }
 
@@ -173,15 +197,23 @@ function handleMapClick(mapElement, event) {
         existingLabel.remove();
     }
 
-    createStatusLabel(mapElement, statusText);
+    createStatusLabel(mapElement, statusText, isRightClick ? "right" : "left");
 }
 
-function createStatusLabel(mapElement, statusText) {
+function createStatusLabel(mapElement, statusText, player) {
     const statusLabel = document.createElement('div');
     statusLabel.classList.add('map-status');
     statusLabel.textContent = statusText;
-
+    if (player === "right") {
+        statusLabel.classList.add('right');
+    } else {
+        statusLabel.classList.add('left');
+    }
     mapElement.appendChild(statusLabel);
+    setInterval(() => {
+        statusLabel.classList.add('visible');
+    }, 30);
+    
 }
 
 

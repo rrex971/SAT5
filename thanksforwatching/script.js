@@ -1,17 +1,75 @@
 const HOST = '127.0.0.1:24050';
 const socket = new ReconnectingWebSocket(`ws://${HOST}/websocket/v2`);
 
+gapi.load('client:auth2', () => {
+    gapi.client.init({
+        apiKey: 'AIzaSyDyGykbUrhCxV4ZDCtDyWk4Wg0xzzcHzTo', 
+        scope: 'https://www.googleapis.com/auth/spreadsheets', 
+        discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"]
+    }).then(() => {
+    });
+});
+
+let spreadsheetid = '18OIKzPcidAPFQbrGvmtO3ZpP3L2v7KDRbzOHFgcPA_8';
+const dataRange = 'schedule!C96:L111';
+
+
+fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetid}/values/${dataRange}?key=AIzaSyDyGykbUrhCxV4ZDCtDyWk4Wg0xzzcHzTo`)
+.then(res => res.json())
+.then(api => {
+    if (!api || !Array.isArray(api.values)) return;
+    const monthMap = {
+        Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6,
+        Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12
+    };
+    const year = new Date().getFullYear();
+
+    const transformed = api.values.map(row => {
+        // row example: ["17","(Sun) Sep 28","22:30 ","",...,"Vasion",...,"kingoflim2401"]
+        const rawDate = (row[1] || '').replace(/\(.*?\)\s*/g, '').trim(); // "Sep 28"
+        const rawTime = (row[2] || '').trim(); // "22:30"
+        const player1 = (row[6] || '').trim();
+        const player2 = (row[9] || '').trim();
+
+        let month = '';
+        let day = '';
+        const parts = rawDate.split(/\s+/).filter(Boolean);
+        if (parts.length >= 2) {
+            const mon = parts[0].replace(/[.,]/g, '');
+            month = monthMap[mon] || parseInt(mon) || '';
+            day = parseInt(parts[1]) || '';
+        }
+
+        // Format date as M/D/YYYY to match existing code expectations (split by '/')
+        const date = month && day ? `${month}/${day}/${year}` : '';
+
+        return {
+            date,
+            time: rawTime,
+            player1,
+            player2
+        };
+    }).filter(item => item.date && item.time && (item.player1 || item.player2));
+
+    setTimeout(() => {
+        try {
+            schedule = transformed;
+            console.log('Replaced schedule with transformed Sheets data', schedule);
+        } catch (e) {
+            window._transformedSheetsSchedule = transformed;
+            console.log('Stored transformed schedule on window._transformedSheetsSchedule', transformed);
+        }
+    }, 0);
+})
+.catch(err => console.error('Error transforming Sheets data:', err));
+
+
 let artist = document.getElementById("artist");
 let title = document.getElementById("title");
 
 let schedule = [];
 let seeds = {};
 
-fetch('../schedule/ro16.json')
-    .then(response => response.json())
-    .then(data => {
-        schedule = data;
-    });
 
 fetch('../seeds.json')
     .then(response => response.json())
@@ -22,6 +80,7 @@ fetch('../seeds.json')
 
 const now = new Date();
 const utc8Now = new Date(now.getTime() + 8 * 60 * 60 * 1000);
+utc8Now.setHours(utc8Now.getHours());
 
 function findNextMatch() {
     let nextmatch = [];
@@ -58,14 +117,14 @@ function findNextMatch() {
             const matchDiv = document.createElement("div");
             matchDiv.id = `nextmatch-item-${idx}`;
             matchDiv.classList.add('upcoming-match');
-            
+            let hoursto = Math.ceil((matchTime - utc8Now) / 3600000)
             matchDiv.innerHTML = `
                 <div class="matchheader">
                     <div class="timing">
                         <span class="date">${match.date}</span> <span class="time">${match.time}</span> UTC+8
                     </div>
                     <div class="intime">
-                        in about ${Math.ceil((matchTime - utc8Now) / 3600000)} hours
+                        in about ${hoursto} ${hoursto === 1 ? 'hour' : 'hours'}
                     </div>
                 </div>
 

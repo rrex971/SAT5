@@ -102,6 +102,10 @@
                         mapDetailsElement.appendChild(mapVersionElement);
                         mapDetailsElement.appendChild(mapCreatorElement);
 
+                        // Store data for picks management
+                        mapElement.dataset.beatmapId = beatmapId;
+                        mapElement.mapData = mapData;
+
                         mapElement.appendChild(mapModElement);
                         mapElement.appendChild(mapDetailsElement);
 
@@ -129,12 +133,12 @@
     }
 })();
 
-document.addEventListener('contextmenu', function(event) {
-  event.preventDefault(); 
+document.addEventListener('contextmenu', function (event) {
+    event.preventDefault();
 });
 
-document.addEventListener('click', function(event) {
-  event.preventDefault(); 
+document.addEventListener('click', function (event) {
+    event.preventDefault();
 });
 
 function handleMapClick(mapElement, event) {
@@ -144,29 +148,46 @@ function handleMapClick(mapElement, event) {
     const isAlt = event.altKey;
     const isCtrl = event.ctrlKey;
 
+    // Get map data from the element
+    const beatmapId = mapElement.dataset.beatmapId;
+    const mapData = mapElement.mapData;
+
     if (isCtrl) {
         const labels = mapElement.querySelectorAll('.map-status');
         mapElement.classList.remove('flash-left', 'flash-right');
         labels.forEach(l => l.remove());
         mapElement.style.borderColor = '#f6e49f';
         mapElement.style.filter = 'none';
+        
+        // Remove pick from localStorage
+        if (beatmapId) {
+            removePickByBeatmapId(beatmapId);
+        }
         return;
     }
 
     let statusText = '';
+    let action = '';
+    let player = 0;
 
     if (isAlt) {
         statusText = isRightClick ? `Protected by ${temp.playerRight}` : `Protected by ${temp.playerLeft}`;
         mapElement.style.borderColor = '#64ff74ff';
         mapElement.style.filter = 'none';
+        action = 'protected';
+        player = isRightClick ? 2 : 1;
     } else if (isShift && !isRightClick) {
         statusText = `Banned by ${temp.playerLeft}`;
         mapElement.style.borderColor = '#ff6464ff';
         mapElement.style.filter = 'brightness(0.6) grayscale(30%)';
+        action = 'banned';
+        player = 1;
     } else if (isShift && isRightClick) {
         statusText = `Banned by ${temp.playerRight}`;
         mapElement.style.borderColor = '#ff6464ff';
         mapElement.style.filter = 'brightness(0.6) grayscale(30%)';
+        action = 'banned';
+        player = 2;
     } else {
         // clear any special styles for neutral/picked cases
         mapElement.style.borderColor = '';
@@ -180,19 +201,25 @@ function handleMapClick(mapElement, event) {
             setTimeout(() => {
                 mapElement.classList.remove('flash-left');
             }, 4000);
+            action = 'picked';
+            player = 1;
         } else if (!isShift && isRightClick) {
             statusText = `Picked by ${temp.playerRight}`;
             mapElement.style.borderColor = '#f7c9e2';
             setTimeout(() => {
                 mapElement.classList.add('flash-right');
-            }   , 100);
+            }, 100);
             setTimeout(() => {
                 mapElement.classList.remove('flash-right');
             }, 4000);
+            action = 'picked';
+            player = 2;
         }
     }
 
-    const existingLabel = mapElement.querySelector('.map-status');
+        if ((action === 'picked' || action === 'banned') && mapData) {
+            addPick(beatmapId, mapData.pick, mapData.title, mapData.artist, action, player);
+        }    const existingLabel = mapElement.querySelector('.map-status');
     if (existingLabel) {
         existingLabel.remove();
     }
@@ -213,7 +240,7 @@ function createStatusLabel(mapElement, statusText, player) {
     setInterval(() => {
         statusLabel.classList.add('visible');
     }, 30);
-    
+
 }
 
 
@@ -319,33 +346,7 @@ socket.onerror = error => {
 
 socket.onmessage = event => {
     let data = JSON.parse(event.data);
-    if (tempId !== data.beatmap.id || tempArtist !== data.beatmap.artist) {
-        tempId = data.beatmap.id
-        if (tempId === 0) {
-            for (let key in mappool["custom"]) {
-                console.log(data.beatmap.title.toLowerCase());
-                if (data.beatmap.title.toLowerCase().includes(key.toLowerCase())) {
-                    pick.innerHTML = mappool["custom"][key];
-                    custom.classList.add("transition");
-                    break;
-                }
-            }
-        }
-        else if (mappool[data.beatmap.id] !== undefined) {
-            if ((mappool[data.beatmap.id].custom === true)) {
-                console.log(data.beatmap.title.toLowerCase());
-                pick.innerHTML = mappool[data.beatmap.id].pick;
-                custom.classList.add("transition");
-            } else {
-                pick.innerHTML = mappool[data.beatmap.id];
-                custom.classList.remove("transition");
-            }
-        }
-        else {
-            pick.innerHTML = "N/A";
-            custom.classList.remove("transition");
-        }
-    }
+
 
     if (tempImg !== data.directPath.beatmapBackground) {
         tempImg = data.directPath.beatmapBackground;
@@ -393,29 +394,34 @@ socket.onmessage = event => {
         length.update(Math.floor(newTime / 1000))
     }
 
-    if (data.beatmap.stats.cs != tempCs) {
-        tempCs = data.beatmap.stats.cs.converted;
+    if (data.tourney.clients[0].beatmap.stats.cs != tempCs) {
+        //tempCs = data.beatmap.stats.cs.converted;
+        tempCs = data.tourney.clients[0].beatmap.stats.cs.converted;
         cs.update(Math.round(tempCs * 100) / 100);
     }
-    if (data.beatmap.stats.ar != tempAr) {
-        tempAr = data.beatmap.stats.ar.converted;
+    if (data.tourney.clients[0].beatmap.stats.ar != tempAr) {
+        //tempAr = data.beatmap.stats.ar.converted;
+        tempAr = data.tourney.clients[0].beatmap.stats.ar.converted;
         ar.update(Math.round(tempAr * 100) / 100);
     }
-    if (data.beatmap.stats.od != tempOd) {
-        tempOd = data.beatmap.stats.od.converted;
+    if (data.tourney.clients[0].beatmap.stats.od != tempOd) {
+        //tempOd = data.beatmap.stats.od.converted;
+        tempOd = data.tourney.clients[0].beatmap.stats.od.converted;
         od.update(Math.round(tempOd * 100) / 100);
     }
-    if (data.beatmap.stats.hp != tempHp) {
-        tempHp = data.beatmap.stats.hp.converted;
+    if (data.tourney.clients[0].beatmap.stats.hp != tempHp) {
+        //tempHp = data.beatmap.stats.hp.converted;
+        tempHp = data.tourney.clients[0].beatmap.stats.hp.converted;
         hp.update(Math.round(tempHp * 100) / 100);
     }
-    if (data.beatmap.stats.bpm.common != tempBPM) {
-        tempBPM = data.beatmap.stats.bpm.common
+    if (data.tourney.clients[0].beatmap.stats.bpm.common != tempBPM) {
+        //tempBPM = data.beatmap.stats.bpm.common
+        tempBPM = data.tourney.clients[0].beatmap.stats.bpm.common;
         bpm.update(Math.round(tempBPM * 100) / 100);
     }
-    if (data.beatmap.stats.stars.total != tempSR) {
-        tempSR = data.beatmap.stats.stars.total
-        sr.update(Math.round(tempSR * 100) / 100)
+    if (data.tourney.clients[0].beatmap.stats.stars.total != tempSR) {
+        tempSR = data.tourney.clients[0].beatmap.stats.stars.total;
+        sr.update(Math.round(tempSR * 100) / 100);
     }
 
     if (temp.starsLeft !== data.tourney.points.left) {
@@ -492,5 +498,157 @@ socket.onmessage = event => {
         }
     }
 
+    // Check for picks updates on every websocket message
+    if (checkPicksChanged()) {
+        updatePicksDisplay();
+    }
+
+}
+
+const picksQueue = document.getElementById("picks-queue");
+const PICKS_STORAGE_KEY = 'sat5-tournament-picks';
+let lastPicksHash = '';
+
+function getPicks() {
+    try {
+        const picks = localStorage.getItem(PICKS_STORAGE_KEY);
+        return picks ? JSON.parse(picks) : [];
+    } catch (error) {
+        console.error('Error reading picks:', error);
+        return [];
+    }
+}
+
+function addPick(beatmapId, pick, title, artist, action, player) {
+    const picks = getPicks();
+    const pickData = {
+        id: Date.now(),
+        beatmapId,
+        pick,
+        title,
+        artist,
+        action,
+        player,
+        timestamp: new Date().toISOString()
+    };
+    
+    picks.unshift(pickData); // Add to beginning
+    
+    try {
+        localStorage.setItem(PICKS_STORAGE_KEY, JSON.stringify(picks));
+    } catch (error) {
+        console.error('Error saving pick:', error);
+    }
+}
+
+// Remove pick by beatmapId
+function removePickByBeatmapId(beatmapId) {
+    const picks = getPicks();
+    const pickIndex = picks.findIndex(pick => pick.beatmapId === beatmapId);
+    
+    if (pickIndex !== -1) {
+        const filteredPicks = picks.filter((pick, index) => index !== pickIndex);
+        try {
+            localStorage.setItem(PICKS_STORAGE_KEY, JSON.stringify(filteredPicks));
+        } catch (error) {
+            console.error('Error removing pick:', error);
+        }
+    }
+}
+
+// Clear all picks
+function clearAllPicks() {
+    try {
+        localStorage.removeItem(PICKS_STORAGE_KEY);
+        updatePicksDisplay();
+    } catch (error) {
+        console.error('Error clearing picks:', error);
+    }
+}
+
+// Check if picks changed (for polling)
+function checkPicksChanged() {
+    try {
+        const currentHash = localStorage.getItem(PICKS_STORAGE_KEY) || '';
+        if (currentHash !== lastPicksHash) {
+            lastPicksHash = currentHash;
+            return true;
+        }
+        return false;
+    } catch (error) {
+        return false;
+    }
+}
+
+// Initialize picks display when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    // Display initial picks
+    updatePicksDisplay();
+    
+    // Initialize hash for polling
+    lastPicksHash = localStorage.getItem(PICKS_STORAGE_KEY) || '';
+    
+    // Add right-click clear functionality to picks title
+    const picksTitle = document.getElementById('picks-title');
+    if (picksTitle) {
+        picksTitle.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            clearAllPicks();
+        });
+    }
+});
+
+let lastPicksCount = 0;
+
+function updatePicksDisplay() {
+    if (!picksQueue) return;
+    
+    const picks = getPicks();
+    const currentPicksCount = picks.length;
+    const isNewPick = currentPicksCount > lastPicksCount;
+    
+    // Clear existing picks
+    picksQueue.innerHTML = '';
+    
+    // Display picks in order (newest first)
+    picks.forEach((pickData, index) => {
+        const pickElement = document.createElement('div');
+        pickElement.classList.add('pick-item');
+        
+        // Add player-specific styling
+        if (pickData.player === 1) {
+            pickElement.classList.add('player1');
+        } else if (pickData.player === 2) {
+            pickElement.classList.add('player2');
+        }
+        
+        // Add action-specific styling
+        if (pickData.action === 'banned') {
+            pickElement.classList.add('banned');
+        }
+        
+        // Add animation classes
+        if (isNewPick && index === 0) {
+            // First element is the new one, animate it sliding in
+            pickElement.classList.add('new');
+        } else if (isNewPick && index > 0) {
+            // Other elements shift to the right
+            pickElement.classList.add('shift');
+        }
+        
+        // Set text content
+        const actionText = pickData.action === 'banned' ? 'BAN' : 'PICK';
+        pickElement.textContent = `${actionText}: ${pickData.pick}`;
+        
+        // Add to queue
+        picksQueue.appendChild(pickElement);
+        
+        // Remove animation classes after animation completes
+        setTimeout(() => {
+            pickElement.classList.remove('new', 'shift');
+        }, 400);
+    });
+    
+    lastPicksCount = currentPicksCount;
 }
 

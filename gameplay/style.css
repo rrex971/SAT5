@@ -2,6 +2,13 @@
     max-width: 1920px;
     max-height: 1080px;
     font-weight: 400;
+    font-variant-numeric: lining-nums;
+    -moz-font-feature-settings:"lnum" 1; 
+    -moz-font-feature-settings:"lnum=1"; 
+    -ms-font-feature-settings:"lnum" 1; 
+    -o-font-feature-settings:"lnum" 1; 
+    -webkit-font-feature-settings:"lnum" 1; 
+    font-feature-settings:"lnum" 1;
 }
 #main {
     position: absolute;
@@ -384,6 +391,12 @@
     text-decoration: line-through;
 }
 
+.pick-item.protected {
+    background-color: #537a53;
+    color: #7ad27a;
+    border-left: 3px solid #64ff74;
+}
+
 .pick-item.new {
     animation: slideInLeft 0.2s ease-out;
 }
@@ -612,4 +625,82 @@
 #chatlabels > * {
     background-color: #f6e49f;
     padding: 6px;
+}
+
+#banprot_panel {
+    position: absolute;
+    top: 46.5%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    color: #1d1c28;
+    gap: 10px;
+    width: 350px;
+    padding: 10px 10px;
+}
+
+.centre-label {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 2px;
+    user-select: none;
+    background-color: #f6e49f;
+    width: 120px;
+    padding: 6px 0;
+}
+
+.bp-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.ban {
+    width: 40px;
+    height: 30px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffacac;
+    text-decoration: line-through;
+    letter-spacing: 1px;
+    font-size: 14px;
+    border: 3px solid #d27a7a;
+    background-color: #9b3232;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.ban.empty {
+    border: 3px dashed #9b3232;
+    background-color: #9b3232cc;
+}
+
+.prot {
+    width: 40px;
+    height: 30px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: #9cffa6;
+    letter-spacing: 1px;
+    font-size: 14px;
+    border: 3px solid #64ff74;
+    background-color: #4caf50;
+    transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.prot.empty {
+    border: 3px dashed #4caf50;
+    background-color: #4caf50cc;
+}
+
+.prot.hidden {
+    visibility: hidden;
 }

@@ -64,6 +64,43 @@ function getPicks() {
     }
 }
 
+function addPick(beatmapId, pick, title, artist, action, player) {
+    const picks = getPicks();
+    const pickData = {
+        id: Date.now(),
+        beatmapId,
+        pick,
+        title,
+        artist,
+        action,
+        player,
+        timestamp: new Date().toISOString()
+    };
+    
+    picks.unshift(pickData); // Add to beginning
+    
+    try {
+        localStorage.setItem(PICKS_STORAGE_KEY, JSON.stringify(picks));
+    } catch (error) {
+        console.error('Error saving pick:', error);
+    }
+}
+
+// Remove pick by beatmapId
+function removePickByBeatmapId(beatmapId) {
+    const picks = getPicks();
+    const pickIndex = picks.findIndex(pick => pick.beatmapId === beatmapId);
+    
+    if (pickIndex !== -1) {
+        const filteredPicks = picks.filter((pick, index) => index !== pickIndex);
+        try {
+            localStorage.setItem(PICKS_STORAGE_KEY, JSON.stringify(filteredPicks));
+        } catch (error) {
+            console.error('Error removing pick:', error);
+        }
+    }
+}
+
 function clearAllPicks() {
     try {
         localStorage.removeItem(PICKS_STORAGE_KEY);
@@ -101,6 +138,73 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Update ban/protect display
+function updateBanProtectDisplay() {
+    const picks = getPicks();
+    
+    // Get ban and protect elements
+    const p1ban0 = document.getElementById('p1ban_0');
+    const p1ban1 = document.getElementById('p1ban_1');
+    const p2ban0 = document.getElementById('p2ban_0');
+    const p2ban1 = document.getElementById('p2ban_1');
+    const p1prot0 = document.getElementById('p1prot_0');
+    const p2prot0 = document.getElementById('p2prot_0');
+    
+    // Clear all slots
+    const allSlots = [p1ban0, p1ban1, p2ban0, p2ban1, p1prot0, p2prot0];
+    allSlots.forEach(slot => {
+        if (slot) {
+            slot.textContent = '';
+            slot.classList.remove('filled');
+            slot.classList.add('empty');
+        }
+    });
+    
+    // Filter picks by player and action
+    const p1Bans = picks.filter(pick => pick.player === 1 && pick.action === 'banned');
+    const p2Bans = picks.filter(pick => pick.player === 2 && pick.action === 'banned');
+    const p1Protects = picks.filter(pick => pick.player === 1 && pick.action === 'protected');
+    const p2Protects = picks.filter(pick => pick.player === 2 && pick.action === 'protected');
+    
+    // Populate player 1 bans (first two)
+    if (p1Bans.length > 0 && p1ban0) {
+        p1ban0.textContent = p1Bans[0].pick;
+        p1ban0.classList.remove('empty');
+        p1ban0.classList.add('filled');
+    }
+    if (p1Bans.length > 1 && p1ban1) {
+        p1ban1.textContent = p1Bans[1].pick;
+        p1ban1.classList.remove('empty');
+        p1ban1.classList.add('filled');
+    }
+    
+    // Populate player 2 bans (first two)
+    if (p2Bans.length > 0 && p2ban0) {
+        p2ban0.textContent = p2Bans[0].pick;
+        p2ban0.classList.remove('empty');
+        p2ban0.classList.add('filled');
+    }
+    if (p2Bans.length > 1 && p2ban1) {
+        p2ban1.textContent = p2Bans[1].pick;
+        p2ban1.classList.remove('empty');
+        p2ban1.classList.add('filled');
+    }
+    
+    // Populate player 1 protect (first one)
+    if (p1Protects.length > 0 && p1prot0) {
+        p1prot0.textContent = p1Protects[0].pick;
+        p1prot0.classList.remove('empty');
+        p1prot0.classList.add('filled');
+    }
+    
+    // Populate player 2 protect (first one)
+    if (p2Protects.length > 0 && p2prot0) {
+        p2prot0.textContent = p2Protects[0].pick;
+        p2prot0.classList.remove('empty');
+        p2prot0.classList.add('filled');
+    }
+}
+
 function updatePicksDisplay() {
     if (!picksQueue) return;
     
@@ -126,6 +230,8 @@ function updatePicksDisplay() {
         // Add action-specific styling
         if (pickData.action === 'banned') {
             pickElement.classList.add('banned');
+        } else if (pickData.action === 'protected') {
+            pickElement.classList.add('protected');
         }
         
         // Add animation classes
@@ -138,7 +244,8 @@ function updatePicksDisplay() {
         }
         
         // Set text content
-        const actionText = pickData.action === 'banned' ? 'BAN' : 'PICK';
+        const actionText = pickData.action === 'banned' ? 'BAN' : 
+                          pickData.action === 'protected' ? 'PROTECT' : 'PICK';
         pickElement.textContent = `${actionText}: ${pickData.pick}`;
         
         // Add to queue
@@ -147,10 +254,13 @@ function updatePicksDisplay() {
         // Remove animation classes after animation completes
         setTimeout(() => {
             pickElement.classList.remove('new', 'shift');
-        }, 200);
+        }, 400);
     });
-    
+
     lastPicksCount = currentPicksCount;
+    
+    // Update ban/protect display after picks update
+    updateBanProtectDisplay();
 }
 let tempId = -727, tempImg, tempCs, tempAr, tempOd, tempHp, tempBPM, tempSR, tempTitle, tempArtist, tempMapper, tempDifficulty, tempMods, tempLength;
 let mappool = {};
@@ -200,7 +310,16 @@ socket.onerror = error => {
 
 socket.onmessage = event => {
     let data = JSON.parse(event.data);
+    if (tempId !== data.beatmap.id || tempArtist !== data.beatmap.artist) {
+        tempId = data.beatmap.id
+        if (mappool[data.beatmap.id] !== undefined) {
 
+            pick.innerHTML = mappool[data.beatmap.id];
+        }
+        else {
+            pick.innerHTML = "N/A";
+        }
+    }
 
     if (tempImg !== data.directPath.beatmapBackground) {
         tempImg = data.directPath.beatmapBackground;

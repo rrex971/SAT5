@@ -261,6 +261,28 @@ function updatePicksDisplay() {
     
     // Update ban/protect display after picks update
     updateBanProtectDisplay();
+    
+    // Update pick indicators
+    updatePickIndicators();
+}
+
+function updatePickIndicators() {
+    const picks = getPicks();
+    const pick1Element = document.getElementById('pick1');
+    const pick2Element = document.getElementById('pick2');
+    
+    // Clear existing show classes
+    if (pick1Element) pick1Element.classList.remove('show');
+    if (pick2Element) pick2Element.classList.remove('show');
+    
+    // Find the latest pick action (not ban or protect)
+    const latestPick = picks.find(pick => pick.action === 'picked');
+    
+    if (latestPick && latestPick.player === 1 && pick1Element) {
+        pick1Element.classList.add('show');
+    } else if (latestPick && latestPick.player === 2 && pick2Element) {
+        pick2Element.classList.add('show');
+    }
 }
 let tempId = -727, tempImg, tempCs, tempAr, tempOd, tempHp, tempBPM, tempSR, tempTitle, tempArtist, tempMapper, tempDifficulty, tempMods, tempLength;
 let mappool = {};
@@ -435,16 +457,25 @@ socket.onmessage = event => {
         document.getElementById('seed2').innerHTML = seeds[temp.playerRight] ? `SEED ${seeds[temp.playerRight]}` : ' ';
     }
 
-    if (scoreUpd) {
-        const CAP = 1000000;
+        if (scoreUpd) {
         const leftRaw = temp.scoreLeft || 0;
         const rightRaw = temp.scoreRight || 0;
 
-        const left = Math.min(Math.max(0, leftRaw), CAP);
-        const right = Math.min(Math.max(0, rightRaw), CAP);
+        const differ = leftRaw - rightRaw;
+        const absDiffer = Math.abs(differ);
 
-        const differ = left - right;
-        const percent = Math.min(Math.abs(differ) / CAP * 100, 100);
+        const lowerRaw = Math.min(leftRaw, rightRaw);
+
+        // If the lower player's score is zero:
+        // - if both are zero, percent = 0
+        // - if lower is 0 but difference > 0, treat as full (100%)
+        let percent;
+        if (lowerRaw === 0) {
+            percent = absDiffer === 0 ? 0 : 100;
+        } else {
+            percent = Math.min((absDiffer / lowerRaw) * 100, 100);
+        }
+        console.log({ leftRaw, rightRaw, differ, absDiffer, lowerRaw, percent });
 
         const leftEl = document.getElementById('scorebar-left');
         const rightEl = document.getElementById('scorebar-right');
@@ -452,7 +483,52 @@ socket.onmessage = event => {
         if (leftEl && rightEl) {
             leftEl.style.transition = 'width 0.2s ease';
             rightEl.style.transition = 'width 0.2s ease';
-            diff.update(Math.abs(leftRaw - rightRaw));
+            diff.update(absDiffer);
+            if (differ > 0) {
+                leftEl.style.width = percent + '%';
+                rightEl.style.width = '0%';
+                document.getElementById('score1').classList.add('leading');
+                document.getElementById('score2').classList.remove('leading');
+            } else if (differ < 0) {
+                rightEl.style.width = percent + '%';
+                leftEl.style.width = '0%';
+                document.getElementById('score2').classList.add('leading');
+                document.getElementById('score1').classList.remove('leading');
+            } else {
+                leftEl.style.width = '0%';
+                rightEl.style.width = '0%';
+                document.getElementById('score1').classList.remove('leading');
+                document.getElementById('score2').classList.remove('leading');
+            }
+        }
+    }
+    if (scoreUpd) {
+        const leftRaw = temp.scoreLeft || 0;
+        const rightRaw = temp.scoreRight || 0;
+
+        const differ = leftRaw - rightRaw;
+        const absDiffer = Math.abs(differ);
+
+        const lowerRaw = Math.min(leftRaw, rightRaw);
+
+        // If the lower player's score is zero:
+        // - if both are zero, percent = 0
+        // - if lower is 0 but difference > 0, treat as full (100%)
+        let percent;
+        if (lowerRaw === 0) {
+            percent = absDiffer === 0 ? 0 : 100;
+        } else {
+            percent = Math.min((absDiffer / lowerRaw) * 100, 100);
+        }
+        console.log({ leftRaw, rightRaw, differ, absDiffer, lowerRaw, percent });
+
+        const leftEl = document.getElementById('scorebar-left');
+        const rightEl = document.getElementById('scorebar-right');
+
+        if (leftEl && rightEl) {
+            leftEl.style.transition = 'width 0.2s ease';
+            rightEl.style.transition = 'width 0.2s ease';
+            diff.update(absDiffer);
             if (differ > 0) {
                 leftEl.style.width = percent + '%';
                 rightEl.style.width = '0%';

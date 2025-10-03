@@ -793,3 +793,73 @@
     background-color: #f6e49f;
     padding: 6px;
 }
+
+#pickindicator_panel {
+    position: absolute;
+    top: 113.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.pickindicator {
+    display: flex;
+    text-wrap: nowrap;
+    overflow: hidden;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px 15px;
+    max-width: calc(fit-content - 100px);
+    height: 40px;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    transform: translateY(10%);
+    opacity: 0;
+}
+
+.pickindicator.show {
+    transform: translateY(0%);
+    opacity: 1;
+}
+
+.pickindicator .pickedbylabel {
+    font-size: 10px;
+    font-weight: 700;
+    margin: 0 10px;
+    letter-spacing: 2px;
+}
+
+.pickindicator#pick1 {
+    color: #f6e49f;
+    text-shadow: 0 0 5px #f6e49f;
+}
+
+.pickindicator#pick2 {
+    color: #f7c9e2;
+    text-shadow: 0 0 5px #f7c9e2;
+}
+
+.pickindicator .leftarrow {
+    animation: bounceLeft .5s ease-out infinite alternate-reverse;
+    font-size: 18px;
+}
+
+@keyframes bounceLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-5%); }
+}
+
+.pickindicator .rightarrow {
+    animation: bounceRight .5s ease-out infinite alternate-reverse;
+    font-size: 18px;
+}
+
+@keyframes bounceRight {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(5%); }
+}
+

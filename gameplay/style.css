@@ -709,61 +709,70 @@
 
 #pickindicator_panel {
     position: absolute;
-    top: 53%;
+    top: 113.5%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 10;
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-    width: 350px;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
 }
 
 .pickindicator {
     display: flex;
-    justify-content: space-between;
+    text-wrap: nowrap;
+    overflow: hidden;
     align-items: center;
-    font-size: 12px;
-    font-weight: 700;
-    color: #1d1c28;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    transform: translateY(10%);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px 15px;
+    max-width: calc(fit-content - 100px);
+    height: 40px;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    transform: translateY(-47%);
     opacity: 0;
 }
 
 .pickindicator.show {
-    transform: translateY(0%);
+    transform: translateY(-57%);
     opacity: 1;
 }
 
 .pickindicator .pickedbylabel {
     font-size: 10px;
+    font-weight: 700;
+    margin: 0 10px;
     letter-spacing: 2px;
-    background-color: #f6e49f;
-    padding: 4px 8px;
 }
 
 .pickindicator#pick1 {
-    justify-content: flex-start;
+    color: #f6e49f;
+    text-shadow: 0 0 5px #f6e49f;
 }
 
 .pickindicator#pick2 {
-    justify-content: flex-end;
+    color: #f7c9e2;
+    text-shadow: 0 0 5px #f7c9e2;
 }
 
 .pickindicator .leftarrow {
-    font-size: 16px;
-    color: #f6e49f;
-    font-weight: 900;
-    letter-spacing: -2px;
-    margin-right: 10px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    animation: bounceLeft .5s ease-out infinite alternate-reverse;
+    font-size: 18px;
+}
+
+@keyframes bounceLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-5%); }
 }
 
 .pickindicator .rightarrow {
-    font-size: 16px;
-    color: #f7c9e2;
-    font-weight: 900;
-    letter-spacing: -2px;
-    margin-left: 10px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    animation: bounceRight .5s ease-out infinite alternate-reverse;
+    font-size: 18px;
 }
+
+@keyframes bounceRight {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(5%); }
+}
+

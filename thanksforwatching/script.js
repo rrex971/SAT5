@@ -11,7 +11,7 @@ gapi.load('client:auth2', () => {
 });
 
 let spreadsheetid = '18OIKzPcidAPFQbrGvmtO3ZpP3L2v7KDRbzOHFgcPA_8';
-const dataRange = 'schedule!C58:L89';
+const dataRange = 'schedule!C36:L51';
 
 
 fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetid}/values/${dataRange}?key=AIzaSyDyGykbUrhCxV4ZDCtDyWk4Wg0xzzcHzTo`)
@@ -117,26 +117,41 @@ function findNextMatch() {
             const matchDiv = document.createElement("div");
             matchDiv.id = `nextmatch-item-${idx}`;
             matchDiv.classList.add('upcoming-match');
-            let hoursto = Math.ceil((matchTime - utc8Now) / 3600000)
+
+            const msDiff = matchTime - utc8Now;
+            let timeStr = "";
+            if (msDiff <= 0) {
+                timeStr = "now";
+            } else {
+                const hours = msDiff / 3600000;
+                if (hours < 1) {
+                    const minutes = Math.round(msDiff / 60000);
+                    timeStr = `in about ${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
+                } else if (hours >= 1 && hours < 1.5) {
+                    timeStr = "in about 1 hour";
+                } else {
+                    const hoursto = Math.round(hours);
+                    timeStr = `in about ${hoursto} ${hoursto === 1 ? 'hour' : 'hours'}`;
+                }
+            }
+
             matchDiv.innerHTML = `
                 <div class="matchheader">
                     <div class="timing">
                         <span class="date">${match.date}</span> <span class="time">${match.time}</span> UTC+8
                     </div>
                     <div class="intime">
-                        in about ${hoursto} ${hoursto === 1 ? 'hour' : 'hours'}
+                        ${timeStr}
                     </div>
                 </div>
-
-                    <div class="players">
-                        <div class="player" id="player1">
-                            <span class="playername">${match.player1}</span>
-                            <span class="seed">SEED ${seeds[match.player1]}</span>
-                        </div>
-                        <div class="player" id="player2">
-                            <span class="playername">${match.player2}</span>
-                            <span class="seed">SEED ${seeds[match.player2]}</span>
-                        </div>
+                <div class="players">
+                    <div class="player" id="player1">
+                        <span class="playername">${match.player1}</span>
+                        <span class="seed">SEED ${seeds[match.player1]}</span>
+                    </div>
+                    <div class="player" id="player2">
+                        <span class="playername">${match.player2}</span>
+                        <span class="seed">SEED ${seeds[match.player2]}</span>
                     </div>
                 </div>
             `;

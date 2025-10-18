@@ -11,7 +11,7 @@ gapi.load('client:auth2', () => {
 });
 
 let spreadsheetid = '18OIKzPcidAPFQbrGvmtO3ZpP3L2v7KDRbzOHFgcPA_8';
-const dataRange = 'schedule!C36:L51';
+const dataRange = 'schedule!C22:L29';
 
 
 fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetid}/values/${dataRange}?key=AIzaSyDyGykbUrhCxV4ZDCtDyWk4Wg0xzzcHzTo`)

@@ -361,9 +361,13 @@ socket.onerror = error => {
 socket.onmessage = event => {
     let data = JSON.parse(event.data);
     if (tempId !== data.beatmap.id && mappool !== undefined) {
-        tempId = data.beatmap.id
+        tempId = data.beatmap.id;
         if (mappool[data.beatmap.id] !== undefined) {
-            pick.innerHTML = mappool[data.beatmap.id];
+            if (mappool[data.beatmap.id].pick === undefined) {
+                pick.innerHTML = mappool[data.beatmap.id];
+            } else {
+                pick.innerHTML = mappool[data.beatmap.id].pick;
+            }
         }
         else {
             pick.innerHTML = "N/A";

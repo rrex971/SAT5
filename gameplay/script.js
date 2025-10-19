@@ -345,8 +345,11 @@ socket.onmessage = event => {
     if (tempId !== data.beatmap.id || tempArtist !== data.beatmap.artist) {
         tempId = data.beatmap.id
         if (mappool[data.beatmap.id] !== undefined) {
-
-            pick.innerHTML = mappool[data.beatmap.id];
+            if (mappool[data.beatmap.id].custom === undefined) {
+                pick.innerHTML = mappool[data.beatmap.id];
+            } else {
+                pick.innerHTML = mappool[data.beatmap.id].pick;
+            }
         }
         else {
             pick.innerHTML = "N/A";

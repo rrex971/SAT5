@@ -25,15 +25,15 @@
 
 #maps {
     position: absolute;
-    top: 12%;
-    left: 10%; 
+    top: 18%;
+    left: 10.3%; 
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
     width: 80%;
-    height: 80%;
+    height: 70%;
 }
 
 .map-category {
@@ -43,7 +43,7 @@
 .map {
     background-size: cover;
     background-position: center;
-    width: 400px;
+    width: 351px;
     min-height: 90px;
     background-color: transparent;
     border: 3px solid #f6e49f;
@@ -84,16 +84,16 @@
 .map-title {
     overflow-x: hidden;
     text-overflow: ellipsis;
-    max-width: 250px;
+    max-width: 200px;
     white-space: nowrap;
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: bold;
 }
 
 .map-artist {
     overflow-x: hidden;
     text-overflow: ellipsis;
-    max-width: 250px;
+    max-width: 200px;
     white-space: nowrap;
     font-size: 0.9em;
     color: #ffffff;
@@ -102,7 +102,7 @@
 .map-version {
     overflow-x: hidden;
     text-overflow: ellipsis;
-    max-width: 250px;
+    max-width: 200px;
     white-space: nowrap;
     font-size: 0.7em;
     color: #ffffff;
@@ -180,6 +180,12 @@
     background-color: #537a53;
     color: #7ad27a;
     border-left: 3px solid #64ff74;
+}
+
+.pick-item.tb {
+    background-color: #6a6a6a;
+    color: #cccccc;
+    font-weight: bold;
 }
 
 .pick-item.new {

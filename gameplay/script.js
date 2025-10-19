@@ -232,6 +232,8 @@ function updatePicksDisplay() {
             pickElement.classList.add('banned');
         } else if (pickData.action === 'protected') {
             pickElement.classList.add('protected');
+        } else if (pickData.pick && pickData.pick.toUpperCase() === 'TB') {
+            pickElement.classList.add('tb');
         }
         
         // Add animation classes
@@ -244,9 +246,17 @@ function updatePicksDisplay() {
         }
         
         // Set text content
-        const actionText = pickData.action === 'banned' ? 'BAN' : 
-                          pickData.action === 'protected' ? 'PROTECT' : 'PICK';
-        pickElement.textContent = `${actionText}: ${pickData.pick}`;
+        let displayText;
+        if (pickData.action === 'banned') {
+            displayText = `BAN: ${pickData.pick}`;
+        } else if (pickData.action === 'protected') {
+            displayText = `PROTECT: ${pickData.pick}`;
+        } else if (pickData.pick && pickData.pick.toUpperCase() === 'TB') {
+            displayText = 'PICK: TB';
+        } else {
+            displayText = `PICK: ${pickData.pick}`;
+        }
+        pickElement.textContent = displayText;
         
         // Add to queue
         picksQueue.appendChild(pickElement);

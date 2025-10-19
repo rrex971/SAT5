@@ -1,146 +1,162 @@
 {
-  "4673771": {
+  "5224788": {
     "pick": "NM1",
-    "artist": "DIVELA feat. Hatsune Miku",
-    "title": "Beat Syncer",
-    "version": "Replay",
-    "creator": "aundy",
-    "bg": "https://assets.ppy.sh/beatmaps/2207241/covers/raw.jpg"
+    "artist": "Ado",
+    "title": "Bouquet for Me",
+    "version": "Allegrissimo & Sutherland Collab Extra",
+    "creator": "Allegrissimo",
+    "bg": "https://assets.ppy.sh/beatmaps/2407345/covers/raw.jpg"
   },
-  "4801567": {
+  "5210544": {
     "pick": "NM2",
-    "artist": "Raimukun",
-    "title": "Akagami Setsuwa",
-    "version": "Uri's Extra",
-    "creator": "Vermasium",
-    "bg": "https://assets.ppy.sh/beatmaps/2194990/covers/raw.jpg"
-  },
-  "5187417": {
-    "pick": "NM3",
-    "artist": "Luna Fozer",
-    "title": "Overjoy * OVERDOSE!!",
-    "version": "Collab EXTRA!!",
-    "creator": "Mir",
-    "bg": "https://assets.ppy.sh/beatmaps/2395062/covers/raw.jpg"
-  },
-  "5081857": {
-    "pick": "NM4",
-    "artist": "PSYQUI",
-    "title": "Raise Your Hands (feat. Such)",
-    "version": "Equilibrium",
-    "creator": "Cocoyu",
-    "bg": "https://assets.ppy.sh/beatmaps/2358549/covers/raw.jpg"
-  },
-  "4917439": {
-    "pick": "NM5",
-    "artist": "UNDEAD CORPORATION",
-    "title": "Frozen (Cut Ver.)",
-    "version": "220 Kelvin = -53.15 Celsius",
+    "artist": "seatrus",
+    "title": "Hoshi Furu Yoru to Ichirin no Hana",
+    "version": "Descending Stars",
     "creator": "NatsuRin",
-    "bg": "https://assets.ppy.sh/beatmaps/2301047/covers/raw.jpg"
+    "bg": "https://assets.ppy.sh/beatmaps/2402523/covers/raw.jpg"
   },
-  "5336192": {
+  "5124783": {
+    "pick": "NM3",
+    "artist": "EFESIAN",
+    "title": "Up 2 Speed",
+    "version": "Alvearia",
+    "creator": "lao sai",
+    "bg": "https://assets.ppy.sh/beatmaps/2373319/covers/raw.jpg"
+  },
+  "5167190": {
+    "pick": "NM5",
+    "artist": "Gram",
+    "title": "Nibelungen",
+    "version": "speedmapping (literal)",
+    "creator": "Zenoc",
+    "bg": "https://assets.ppy.sh/beatmaps/2387895/covers/raw.jpg"
+  },
+  "4309678": {
     "pick": "NM6",
-    "artist": "tosho_aTe",
-    "title": "murder",
-    "version": "forgotten. (sat5 edit)",
-    "creator": "sap",
-    "bg": "https://assets.ppy.sh/beatmaps/2445028/covers/raw.jpg"
+    "artist": "Inabakumori",
+    "title": "Rainy Boots",
+    "version": "Monsoon",
+    "creator": "_necroplasma",
+    "bg": "https://assets.ppy.sh/beatmaps/2061527/covers/raw.jpg"
   },
-  "5070534": {
+  "4758621": {
     "pick": "HD1",
-    "artist": "DAOKO",
-    "title": "Kimi",
-    "version": "we",
-    "creator": "-Mikan",
-    "bg": "https://assets.ppy.sh/beatmaps/2354995/covers/raw.jpg"
+    "artist": "t+pazolite",
+    "title": "FLY AWAY! TO THE COSMIC!!",
+    "version": "les go",
+    "creator": "- Rem -",
+    "bg": "https://assets.ppy.sh/beatmaps/2239251/covers/raw.jpg"
   },
-  "2951510": {
+  "5324165": {
     "pick": "HD2",
-    "artist": "seiya-murai feat. ALT",
-    "title": "Sumidagawa Karenka",
-    "version": "Elzix's Insane",
-    "creator": "Krimek",
-    "bg": "https://assets.ppy.sh/beatmaps/1232407/covers/raw.jpg"
+    "artist": "Hanon x Kotoha",
+    "title": "Fuwari",
+    "version": "ExtrA",
+    "creator": "rollpan",
+    "bg": "https://assets.ppy.sh/beatmaps/2440724/covers/raw.jpg"
   },
-  "3802110": {
+  "5236623": {
     "pick": "HD3",
-    "artist": "USAO",
-    "title": "Gruequix",
-    "version": "Expert",
-    "creator": "Cubby",
-    "bg": "https://assets.ppy.sh/beatmaps/1850818/covers/raw.jpg"
+    "artist": "Natsume Itsuki",
+    "title": "Natsuiro Memory",
+    "version": "Paradise",
+    "creator": "Gero",
+    "bg": "https://assets.ppy.sh/beatmaps/2411512/covers/raw.jpg"
   },
-  "5073492": {
+  "5039526": {
     "pick": "HR1",
-    "artist": "nowisee",
-    "title": "confusion",
-    "version": "onegai's ex",
-    "creator": "Kim Yoohyeon",
-    "bg": "https://assets.ppy.sh/beatmaps/2334497/covers/raw.jpg"
+    "artist": "factal",
+    "title": "Inner Circle",
+    "version": "Extra",
+    "creator": "v0x",
+    "bg": "https://assets.ppy.sh/beatmaps/2344287/covers/raw.jpg"
   },
-  "4498704": {
+  "3928477": {
     "pick": "HR2",
     "artist": "Good Kid",
-    "title": "Mimi's Delivery Service",
-    "version": "Confidence",
-    "creator": "Napoli",
-    "bg": "https://assets.ppy.sh/beatmaps/2137652/covers/raw.jpg"
+    "title": "No Time to Explain",
+    "version": "Heartache",
+    "creator": "The Honeysticks",
+    "bg": "https://assets.ppy.sh/beatmaps/1905182/covers/raw.jpg"
   },
-  "5289226": {
-    "pick": "HR3",
-    "artist": "Sennzai & Kabocha",
-    "title": "Reveal",
-    "version": "GAMILIE'S SPOTLIGHT",
-    "creator": "KiuL",
-    "bg": "https://assets.ppy.sh/beatmaps/2429006/covers/raw.jpg"
-  },
-  "4406775": {
+  "3717361": {
     "pick": "DT1",
-    "artist": "KOTOKO",
-    "title": "Koi Kou Enishi",
-    "version": "Insane",
-    "creator": "advu_",
-    "bg": "https://assets.ppy.sh/beatmaps/2100610/covers/raw.jpg"
+    "artist": "Yorushika",
+    "title": "Left-Right Confusion",
+    "version": "Sunlight",
+    "creator": "GalaxySkys",
+    "bg": "https://assets.ppy.sh/beatmaps/1812210/covers/raw.jpg"
   },
-  "4095751": {
+  "5233988": {
     "pick": "DT2",
-    "artist": "AAAA",
-    "title": "carnation",
-    "version": "anxient's insane",
-    "creator": "Aeril",
-    "bg": "https://assets.ppy.sh/beatmaps/1967974/covers/raw.jpg"
+    "artist": "Mili",
+    "title": "Ga1ahad and Scientific Witchery",
+    "version": "maple",
+    "creator": "jykca",
+    "bg": "https://assets.ppy.sh/beatmaps/2218844/covers/raw.jpg"
   },
-  "5239486": {
+  "5332889": {
     "pick": "DT3",
-    "artist": "Nekomata Master+",
-    "title": "Spiral2005",
-    "version": "insano",
-    "creator": "Rebo",
-    "bg": "https://assets.ppy.sh/beatmaps/2030574/covers/raw.jpg"
+    "artist": "Andora",
+    "title": "Delusion (feat. juu)",
+    "version": "Insane",
+    "creator": "Dailycare",
+    "bg": "https://assets.ppy.sh/beatmaps/2443862/covers/raw.jpg"
   },
-  "3355013": {
+  "5112812": {
+    "pick": "DT4",
+    "artist": "Moe Shop",
+    "title": "Notice (w/ TORIENA)",
+    "version": "wyit's Insane",
+    "creator": "momothx",
+    "bg": "https://assets.ppy.sh/beatmaps/2149987/covers/raw.jpg"
+  },
+  "4083632": {
     "pick": "FM1",
-    "artist": "*wakadori",
-    "title": "Fuzzy-Navel",
-    "version": "Cocktail",
-    "creator": "-Sylvari",
-    "bg": "https://assets.ppy.sh/beatmaps/1643695/covers/raw.jpg"
+    "artist": "paraoka feat. haru*nya",
+    "title": "Dreadnought",
+    "version": "we the people",
+    "creator": "zglock",
+    "bg": "https://assets.ppy.sh/beatmaps/1968819/covers/raw.jpg"
   },
-  "4027429": {
+  "3699088": {
     "pick": "FM2",
-    "artist": "SWAN K feat. Asuka M",
-    "title": "LOVE B.B.B",
-    "version": "Illusion",
-    "creator": "mizto",
-    "bg": "https://assets.ppy.sh/beatmaps/1946656/covers/raw.jpg"
+    "artist": "sasakure.UK",
+    "title": "Neri to Kohakutou",
+    "version": "Sweets",
+    "creator": "Kyle Y",
+    "bg": "https://assets.ppy.sh/beatmaps/1803877/covers/raw.jpg"
   },
-  "5266949": {
+  "3735396": {
+    "pick": "FM3",
+    "artist": "NIWASHI",
+    "title": "Model of earth",
+    "version": "Welcome to funk town,how can i serve you today?",
+    "creator": "Randomness64",
+    "bg": "https://assets.ppy.sh/beatmaps/1820380/covers/raw.jpg"
+  },
+  "5345701": {
+    "pick": "NM4",
+    "artist": "r-906",
+    "title": "YKWTD",
+    "version": "OnLoong's Extra",
+    "creator": "sap",
+    "bg": "https://assets.ppy.sh/beatmaps/2448529/covers/raw.jpg"
+  },
+  "5345651": {
+    "pick": "HR3",
+    "artist": "TWICE",
+    "title": "THIS IS FOR",
+    "version": "ALL MY LADIES NOW",
+    "creator": "LycaonMyHusband",
+    "bg": "https://assets.ppy.sh/beatmaps/2448499/covers/raw.jpg"
+  },
+  "5345687": {
     "pick": "TB",
-    "artist": "Camellia",
-    "title": "Exit This Earth's Atomosphere (Camellia's \"PLANETARY//200STEP\" Remix)",
-    "version": "Exoplanetary Collab Banger",
-    "creator": "Charity",
-    "bg": "https://assets.ppy.sh/beatmaps/2421083/covers/raw.jpg"
+    "artist": "Ludicin",
+    "title": "Bismuth",
+    "version": "Iridescent Galaxy (Buff edit.)",
+    "creator": "Shinjuko",
+    "bg": "https://assets.ppy.sh/beatmaps/2340845/covers/raw.jpg"
   }
 }

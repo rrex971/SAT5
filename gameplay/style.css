@@ -397,6 +397,12 @@
     border-left: 3px solid #64ff74;
 }
 
+.pick-item.tb {
+    background-color: #6a6a6a;
+    color: #cccccc;
+    font-weight: bold;
+}
+
 .pick-item.new {
     animation: slideInLeft 0.2s ease-out;
 }

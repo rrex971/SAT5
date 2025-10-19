@@ -8,7 +8,7 @@
         }
         const mappool = await response.json();
 
-        const modOrder = ['NM', 'HD', 'HR', 'DT', 'FM'];
+        const modOrder = ['NM', 'HD', 'HR', 'DT', 'FM', 'TB'];
 
         const categories = modOrder.reduce((acc, mod) => {
             acc[mod] = [];
@@ -191,7 +191,12 @@ function handleMapClick(mapElement, event) {
         mapElement.style.borderColor = '';
         mapElement.style.filter = '';
         if (!isShift && !isRightClick) {
-            statusText = `Picked by ${temp.playerLeft}`;
+            // Check if this is a TB pick
+            if (mapData && mapData.pick && mapData.pick.toUpperCase() === 'TB') {
+                statusText = 'TB HYPE';
+            } else {
+                statusText = `Picked by ${temp.playerLeft}`;
+            }
             mapElement.style.borderColor = '#f6e49f';
             setTimeout(() => {
                 mapElement.classList.add('flash-left');
@@ -202,7 +207,12 @@ function handleMapClick(mapElement, event) {
             action = 'picked';
             player = 1;
         } else if (!isShift && isRightClick) {
-            statusText = `Picked by ${temp.playerRight}`;
+            // Check if this is a TB pick
+            if (mapData && mapData.pick && mapData.pick.toUpperCase() === 'TB') {
+                statusText = 'TB HYPE';
+            } else {
+                statusText = `Picked by ${temp.playerRight}`;
+            }
             mapElement.style.borderColor = '#f7c9e2';
             setTimeout(() => {
                 mapElement.classList.add('flash-right');
@@ -234,6 +244,12 @@ function createStatusLabel(mapElement, statusText, player) {
     } else {
         statusLabel.classList.add('left');
     }
+    
+    // Apply gradient background for TB HYPE labels
+    if (statusText === 'TB HYPE') {
+        statusLabel.style.background = 'linear-gradient(45deg, #f6e49f, #f7c9e2)';
+    }
+    
     mapElement.appendChild(statusLabel);
     setInterval(() => {
         statusLabel.classList.add('visible');
@@ -594,6 +610,8 @@ function updatePicksDisplay() {
             pickElement.classList.add('banned');
         } else if (pickData.action === 'protected') {
             pickElement.classList.add('protected');
+        } else if (pickData.pick && pickData.pick.toUpperCase() === 'TB') {
+            pickElement.classList.add('tb');
         }
         
         // Add animation classes
@@ -606,9 +624,17 @@ function updatePicksDisplay() {
         }
         
         // Set text content
-        const actionText = pickData.action === 'banned' ? 'BAN' : 
-                          pickData.action === 'protected' ? 'PROTECT' : 'PICK';
-        pickElement.textContent = `${actionText}: ${pickData.pick}`;
+        let displayText;
+        if (pickData.action === 'banned') {
+            displayText = `BAN: ${pickData.pick}`;
+        } else if (pickData.action === 'protected') {
+            displayText = `PROTECT: ${pickData.pick}`;
+        } else if (pickData.pick && pickData.pick.toUpperCase() === 'TB') {
+            displayText = 'PICK: TB';
+        } else {
+            displayText = `PICK: ${pickData.pick}`;
+        }
+        pickElement.textContent = displayText;
         
         // Add to queue
         picksQueue.appendChild(pickElement);

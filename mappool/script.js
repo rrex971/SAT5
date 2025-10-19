@@ -194,8 +194,10 @@ function handleMapClick(mapElement, event) {
             // Check if this is a TB pick
             if (mapData && mapData.pick && mapData.pick.toUpperCase() === 'TB') {
                 statusText = 'TB HYPE';
+                player = 0; // No player for TB picks
             } else {
                 statusText = `Picked by ${temp.playerLeft}`;
+                player = 1;
             }
             mapElement.style.borderColor = '#f6e49f';
             setTimeout(() => {
@@ -205,13 +207,14 @@ function handleMapClick(mapElement, event) {
                 mapElement.classList.remove('flash-left');
             }, 4000);
             action = 'picked';
-            player = 1;
         } else if (!isShift && isRightClick) {
             // Check if this is a TB pick
             if (mapData && mapData.pick && mapData.pick.toUpperCase() === 'TB') {
                 statusText = 'TB HYPE';
+                player = 0; // No player for TB picks
             } else {
                 statusText = `Picked by ${temp.playerRight}`;
+                player = 2;
             }
             mapElement.style.borderColor = '#f7c9e2';
             setTimeout(() => {
@@ -221,7 +224,6 @@ function handleMapClick(mapElement, event) {
                 mapElement.classList.remove('flash-right');
             }, 4000);
             action = 'picked';
-            player = 2;
         }
     }
 
@@ -663,13 +665,35 @@ function updatePickIndicators() {
     const pick1Element = document.getElementById('pick1');
     const pick2Element = document.getElementById('pick2');
     
-    // Clear existing show classes
+    // Always clear existing show classes first
     if (pick1Element) pick1Element.classList.remove('show');
     if (pick2Element) pick2Element.classList.remove('show');
     
-    // Find the latest pick action (not ban or protect)
+    // Find the latest pick action (any pick, including TB)
     const latestPick = picks.find(pick => pick.action === 'picked');
     
+    // If the latest pick is TB or has no player, hide all indicators
+    if (latestPick && (latestPick.player === 0 || !latestPick.player || 
+        (latestPick.pick && latestPick.pick.toUpperCase() === 'TB'))) {
+        // Explicitly hide indicators for TB picks
+        if (pick1Element) {
+            pick1Element.style.display = 'none';
+        }
+        if (pick2Element) {
+            pick2Element.style.display = 'none';
+        }
+        return;
+    }
+    
+    // For non-TB picks, show indicators and restore display
+    if (pick1Element) {
+        pick1Element.style.display = 'flex';
+    }
+    if (pick2Element) {
+        pick2Element.style.display = 'flex';
+    }
+    
+    // Show the appropriate indicator for regular picks
     if (latestPick && latestPick.player === 1 && pick1Element) {
         pick1Element.classList.add('show');
     } else if (latestPick && latestPick.player === 2 && pick2Element) {

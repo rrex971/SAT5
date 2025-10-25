@@ -46,6 +46,7 @@ const sr = new CountUp("sr", 0, 0, 2, 0.3, { useEasing: true, useGrouping: false
 
 let pick = document.getElementById("pick");
 let custom = document.getElementById("custom");
+let customIndicator = document.getElementById("custom-indicator");
 let img;
 let round = document.getElementById("ro");
 
@@ -366,25 +367,47 @@ socket.onmessage = event => {
     let data = JSON.parse(event.data);
     if (tempId !== data.beatmap.id || tempArtist !== data.beatmap.artist) {
         tempId = data.beatmap.id
+        
+        let pickText = '';
+        
         if (mappool[data.beatmap.id] !== undefined) {
             if (mappool[data.beatmap.id].custom === undefined) {
-                pick.innerHTML = mappool[data.beatmap.id];
+                pickText = mappool[data.beatmap.id];
+                customIndicator.classList.remove('visible');
             } else {
-                pick.innerHTML = mappool[data.beatmap.id].pick;
+                pickText = mappool[data.beatmap.id].pick;
+                customIndicator.classList.add('visible');
             }
         }
         else {
-            pick.innerHTML = "N/A";
+            pickText = "N/A";
+            if (customIndicator) {
+                customIndicator.classList.remove('visible');
+            }
         }
+        
+        // Update with animation wrapper
+        pick.innerHTML = `<span class="pick-text pick-change">${pickText}</span>`;
     }
 
     if (tempImg !== data.directPath.beatmapBackground) {
         tempImg = data.directPath.beatmapBackground;
-        if (tempImg && tempImg.trim() !== "") {
-            bg.src = "/files/beatmap/" + encodeURIComponent(tempImg);
-        } else {
-            bg.src = "";
-        }
+        
+        // Fade out current image
+        bg.classList.add('fade-out');
+        
+        setTimeout(() => {
+            if (tempImg && tempImg.trim() !== "") {
+                bg.src = "/files/beatmap/" + encodeURIComponent(tempImg);
+            } else {
+                bg.src = "";
+            }
+            
+            // Fade in new image
+            setTimeout(() => {
+                bg.classList.remove('fade-out');
+            }, 50);
+        }, 200);
     }
     const newTitle = `${data.beatmap.title}`;
     const newDiff = `[${data.beatmap.version}]`

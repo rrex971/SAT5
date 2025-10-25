@@ -9,6 +9,9 @@
     -o-font-feature-settings:"lnum" 1; 
     -webkit-font-feature-settings:"lnum" 1; 
     font-feature-settings:"lnum" 1;
+    
+    /* Custom snappy exponential-out easing */
+    --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 #main {
     user-select: none;
@@ -189,7 +192,7 @@
 }
 
 .pick-item.new {
-    animation: slideInLeft 0.2s ease-out;
+    animation: slideInLeft 0.2s var(--ease-expo-out);
 }
 
 @keyframes slideInLeft {
@@ -204,7 +207,7 @@
 }
 
 .pick-item.shift {
-    animation: shiftRight 0.4s ease-out;
+    animation: shiftRight 0.4s var(--ease-expo-out);
 }
 
 @keyframes shiftRight {
@@ -227,7 +230,7 @@
     z-index: 10;
     height: 0px;
     overflow: hidden;
-    transition: height 0.3s ease-out;
+    transition: height 0.3s var(--ease-expo-out);
 }
 
 .map-status.left {
@@ -242,12 +245,38 @@
     padding: 2px 6px;
 }
 
+#custom-indicator {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #f6e49f;
+    color: #1d1c28;
+    font-size: 1.2em;
+    font-weight: 700;
+    z-index: 10;
+    height: 0px;
+    overflow: hidden;
+    transition: height 0.4s var(--ease-expo-out);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+#custom-indicator .material-symbols-outlined {
+    font-size: 0.9em;
+}
+
+#custom-indicator.visible {
+    height: 20px;
+    padding: 5px 10px;
+}
+
 .map.flash-left {
     animation: flash-left 1s infinite;
 }
 
 .map.flash-right {
-    transition: box-shadow 0.3s ease-out, border-color 0.3s ease-out;
+    transition: box-shadow 0.3s var(--ease-expo-out), border-color 0.3s var(--ease-expo-out);
     animation: flash-right 1s infinite;
 }
 
@@ -299,7 +328,7 @@
     align-items: center;
     color: #f6e49f;
     font-size: 32px;
-    text-shadow: 0 12px 60px #000, 0 2px 40px #222;
+    text-shadow: 0 0 10px rgba(246, 228, 159, 0.8);
 }
 
 #panel {
@@ -414,6 +443,12 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    opacity: 1;
+    transition: opacity 0.4s var(--ease-expo-out);
+}
+
+#bg.fade-out {
+    opacity: 0;
 }
 
 #srcontainer {
@@ -519,6 +554,26 @@
     justify-content: flex-start;
     align-items: flex-start;
     font-size: 48px;
+    overflow: hidden;
+}
+
+#pick .pick-text {
+    display: inline-block;
+}
+
+#pick .pick-text.pick-change {
+    animation: pickTextSlide 0.4s var(--ease-expo-out);
+}
+
+@keyframes pickTextSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 #casters {
@@ -683,7 +738,7 @@
     font-size: 14px;
     border: 3px solid #d27a7a;
     background-color: #9b3232;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s var(--ease-expo-out), border-color 0.3s var(--ease-expo-out);
 }
 
 .ban.empty {
@@ -702,7 +757,7 @@
     font-size: 14px;
     border: 3px solid #64ff74;
     background-color: #4caf50;
-    transition: background-color 0.3s ease, border 0.3s ease;
+    transition: background-color 0.3s var(--ease-expo-out), border 0.3s var(--ease-expo-out);
 }
 
 .prot.empty {
@@ -822,7 +877,7 @@
     padding: 5px 15px;
     max-width: calc(fit-content - 100px);
     height: 40px;
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    transition: opacity 0.3s var(--ease-expo-out), transform 0.3s var(--ease-expo-out);
     transform: translateY(10%);
     opacity: 0;
 }
@@ -850,7 +905,7 @@
 }
 
 .pickindicator .leftarrow {
-    animation: bounceLeft .5s ease-out infinite alternate-reverse;
+    animation: bounceLeft .5s var(--ease-expo-out) infinite alternate-reverse;
     font-size: 18px;
 }
 
@@ -860,7 +915,7 @@
 }
 
 .pickindicator .rightarrow {
-    animation: bounceRight .5s ease-out infinite alternate-reverse;
+    animation: bounceRight .5s var(--ease-expo-out) infinite alternate-reverse;
     font-size: 18px;
 }
 

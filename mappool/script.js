@@ -478,13 +478,13 @@ socket.onmessage = event => {
     if (temp.starsLeft !== data.tourney.points.left) {
         temp.starsLeft = data.tourney.points.left;
         for (let i = 0; i < temp.starsLeft; i++) { document.getElementById(`point1_${i}`).classList.add('filled'); }
-        for (let i = temp.starsLeft + 1; i < 5; i++) { document.getElementById(`point1_${i}`).classList.remove('filled'); }
+        for (let i = temp.starsLeft + 1; i < 7; i++) { document.getElementById(`point1_${i}`).classList.remove('filled'); }
     }
 
     if (temp.starsRight !== data.tourney.points.right) {
         temp.starsRight = data.tourney.points.right;
         for (let i = 0; i < temp.starsRight; i++) { document.getElementById(`point2_${i}`).classList.add('filled'); }
-        for (let i = temp.starsRight + 1; i < 5; i++) { document.getElementById(`point2_${i}`).classList.remove('filled'); }
+        for (let i = temp.starsRight + 1; i < 7; i++) { document.getElementById(`point2_${i}`).classList.remove('filled'); }
     }
     let scoreUpd = false;
     if (temp.scoreLeft !== data.tourney.totalScore.left) {
